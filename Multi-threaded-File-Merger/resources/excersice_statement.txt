@@ -1,0 +1,41 @@
+Problem 1- Multi-threaded File Merger
+Objective:
+Write a multi-threaded Java program that reads lines from multiple input text files and writes them to a single
+ output text file. 
+ 
+The program should merge the lines from the input files in a sorted order.
+Requirements:
+Input Files: The program should accept a list of file paths as input.
+Output File: The program should write the sorted lines to a specified output file.
+Concurrency: Use multiple threads to read from the input files concurrently.
+So
+Sorting: Ensure that the lines are merged in a sorted order in the output file.
+Error Handling: Handle possible I/O exceptions and ensure that all resources are properly closed.
+Example:
+Given three input files:
+file1.txt:
+apple
+Orange
+
+file2.txt:
+banana
+Grape
+
+file3.txt:
+kiwi
+lemon
+
+The output file merged.txt should contain:
+apple
+banana
+grape
+kiwi
+lemon
+orange
+
+Constraints:
+Assume that each file can fit into memory.
+Ensure thread safety when writing to the output file.
+
+
+The sorting should be case-insensitive.
