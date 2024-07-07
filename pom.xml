@@ -12,5 +12,7 @@
   </properties>
   <modules>
   	<module>Multi-threaded-File-Merger</module>
+  	<module>Simple-Synchronization</module>
+  	<module>Thread-Pool-Example</module>
   </modules>
 </project>
