@@ -13,7 +13,7 @@
 			<artifactId>exec-maven-plugin</artifactId>
 			<version>3.2.0</version>
 			<configuration>
-				<mainClass>com.multithreading.excercises.FileMergerV4</mainClass>
+				<mainClass>com.multithreading.excercises.FileMergerV6</mainClass>
 				<arguments>
 					<argument>/home/test-user/docs/development/Java-APIs/repositories/Multi-Threading-Excercises/Multi-threaded-File-Merger/resources/file1.txt</argument>
 					<argument>/home/test-user/docs/development/Java-APIs/repositories/Multi-Threading-Excercises/Multi-threaded-File-Merger/resources/file2.txt</argument>

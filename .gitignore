@@ -3,3 +3,4 @@ output*.txt
 .project
 .settings/
 .classpath
+target/
