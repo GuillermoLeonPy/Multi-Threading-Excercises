@@ -8,6 +8,7 @@ public class BankingApplication {
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
+		long beginApplication = System.currentTimeMillis();
 		Account A = new Account("A", 1000);
 		Account B = new Account("B", 1000);
 		final int globalInitialBalance = A.getBalance()+B.getBalance();
@@ -23,8 +24,10 @@ public class BankingApplication {
 		t2.join();
 		System.out.println("Thread "+ t2.getId() + " finished at: " + Instant.now());
 		final int globalFinalBalance = A.getBalance()+B.getBalance();
-		System.out.println("balance A+B="+globalFinalBalance + "; " + (globalFinalBalance==globalInitialBalance ?  "Integrity maintained" : "Integrity broken"));		
-		System.out.println("Main Thread finished: synchronization inside the transfer program method");
+		System.out.println("balance A+B="+globalFinalBalance + "; " + (globalFinalBalance==globalInitialBalance ?  "Integrity maintained" : "Integrity broken"));
+		long endApplication = System.currentTimeMillis();
+		System.out.println("Main Thread finished: synchronization inside the transfer program method"
+						  +"\n time spent: " + (endApplication-beginApplication));
 		
 		
 	}
@@ -57,6 +60,7 @@ class MyRunnable implements Runnable{
 		Random random = new Random();		
 		for(int i = 0; i < 100000; i++) {
 			//synchronized (transferProgram) {
+			//synchronization inside the transfer program method
 				transferProgram.doTransfer(origin, destination, random.nextInt(50));				
 			//}
 		}

@@ -1,8 +1,9 @@
-package com.multithreading.excercises.banking.application.v2;
+package com.multithreading.excercises.banking.application.v4;
 
 import java.time.Instant;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BankingApplication {
 
@@ -26,7 +27,7 @@ public class BankingApplication {
 		final int globalFinalBalance = A.getBalance()+B.getBalance();
 		System.out.println("balance A+B="+globalFinalBalance + "; " + (globalFinalBalance==globalInitialBalance ?  "Integrity maintained" : "Integrity broken"));
 		long endApplication = System.currentTimeMillis();
-		System.out.println("Main Thread finished: synchronization inside the Thread locking on the transfer program class object"
+		System.out.println("Main Thread finished: synchronization at the balance property in the account class, by using AtomicInteger class"
 				  +"\n time spent: " + (endApplication-beginApplication));
 		
 		
@@ -59,35 +60,39 @@ class MyRunnable implements Runnable{
 		System.out.println("Thread " + Thread.currentThread().getId() + " started at: " + Instant.now());
 		Random random = new Random();		
 		for(int i = 0; i < 100000; i++) {
-			//synchronization inside the Thread locking on the transfer program class object
-			synchronized (transferProgram) {
+			//synchronized (transferProgram) {
+			//synchronization at the account class level, on the withdraw and deposit methods
 				transferProgram.doTransfer(origin, destination, random.nextInt(50));				
-			}
+			//}
 		}
 	}
 	
 }
 
 class Account{
-	private int balance;
+	private AtomicInteger balance;
 	private String accountNumber;
 
 	public Account(String accountNumber,int balance) {
 		super();
-		this.balance = balance;
+		this.balance = new AtomicInteger(balance);
 		this.accountNumber = accountNumber;
 	}
 	
 	public void withdraw(int amount) {
-		balance-=amount;
+		//synchronized (this) {
+			balance.addAndGet(-amount);
+		//}		
 	}
 	
 	public void deposit(int amount) {
-		balance+=amount;
+		//synchronized (this) {
+			balance.addAndGet(amount);
+		//}		
 	}
 
 	public int getBalance() {
-		return balance;
+		return balance.get();
 	}
 
 	public String getAccountNumber() {
@@ -105,7 +110,7 @@ class TransferProgram{
 
 	public void doTransfer(Account origin, Account destination, int amount) {
 		//synchronized (this) {
-		//synchronization inside the Thread locking on the transfer program class object
+		//synchronization at the account class level, on the withdraw and deposit methods
 			origin.withdraw(amount);
 			destination.deposit(amount);			
 		//}		
